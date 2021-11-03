@@ -63,4 +63,8 @@ contract Airdrop is Context, Ownable {
   function setToken(address token_) external onlyOwner {
     _token = token_;
   }
+
+  function getAllRecipients() external view returns (address[] memory) {
+    return _all;
+  }
 }
