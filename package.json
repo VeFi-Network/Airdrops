@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "truffle test --network development",
-    "format": "prettier --write **/**/*.{js,sol}"
+    "format": "prettier --write **/**/*.{js,sol}",
+    "flatten": "truffle-flattener contracts/Airdrop.sol > AirdropFlat.sol",
+    "deploy:mainnet": "truffle migrate --network bsc_mainnet"
   },
   "repository": {
     "type": "git",
@@ -24,6 +26,7 @@
     "dotenv": "^10.0.0"
   },
   "devDependencies": {
+    "@openzeppelin/test-helpers": "^0.5.15",
     "bignumber.js": "^9.0.1",
     "chai": "^4.3.4",
     "chai-as-promised": "^7.1.1",

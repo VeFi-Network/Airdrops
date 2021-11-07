@@ -60,6 +60,10 @@ contract Airdrop is Context, Ownable {
     }
   }
 
+  function reclaimTokens(uint256 _amount) external onlyOwner {
+    require(IERC20(_token).transfer(owner(), _amount), "Reclaim failed");
+  }
+
   function setToken(address token_) external onlyOwner {
     _token = token_;
   }

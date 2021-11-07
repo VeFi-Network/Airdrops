@@ -1,6 +1,7 @@
 const BigNumber = web3.BigNumber;
 const MockToken = artifacts.require("MockToken");
 const Airdrop = artifacts.require("Airdrop");
+const { expectRevert } = require("@openzeppelin/test-helpers");
 
 require("chai")
   .use(require("chai-as-promised"))
@@ -23,6 +24,21 @@ contract("Airdrop", (accounts) => {
     (await token.balanceOf(airdrop.address))
       .toString()
       .should.be.bignumber.equal(web3.utils.toWei("1000"));
+  });
+
+  it("should raise an exception if total is more than available", async () => {
+    await expectRevert(
+      airdrop.addRecipients(
+        [
+          { _recipient: account2, _amount: web3.utils.toWei("250") },
+          { _recipient: account3, _amount: web3.utils.toWei("250") },
+          { _recipient: account4, _amount: web3.utils.toWei("250") },
+          { _recipient: account5, _amount: web3.utils.toWei("2500") }
+        ],
+        { from: account1 }
+      ),
+      "Not enough tokens"
+    );
   });
 
   it("should add recipients", async () => {
